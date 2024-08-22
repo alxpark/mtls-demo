@@ -1,0 +1,1 @@
+cat leaf/certs/example.com.cert.pem intermediate/certs/intermediate.cert.pem root/certs/ca.cert.pem > leaf/certs/example.com.cert.full.pem

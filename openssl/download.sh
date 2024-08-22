@@ -1,0 +1,1 @@
+openssl s_client -connect google.com:443 -showcerts 2>&1 < /dev/null | sed -n '/-----BEGIN/,/-----END/p' > google-chain.pem

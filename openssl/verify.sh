@@ -1,0 +1,1 @@
+openssl verify -verbose -show_chain -CAfile google-chain.pem google.com.pem

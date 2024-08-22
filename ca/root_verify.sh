@@ -1,0 +1,1 @@
+openssl x509 -noout -text -in root/certs/ca.cert.pem

@@ -1,0 +1,20 @@
+services:
+  nginx:
+    container_name: kda_nginx
+    image: nginx:latest
+    ports:
+        - "80:80"
+        - "443:443"
+    volumes:
+        - ./home:/usr/home
+        # - ./example.key:/etc/keys/priv.key
+        # - ./conf.d/nginx-example.conf:/etc/nginx/conf.d/example.conf
+        # - ../ca/leaf/certs/example.com.cert.full.pem:/etc/nginx/ssl/fullchain.pem
+        # - ../ca/leaf/private/example.com.key.pem:/etc/nginx/ssl/privkey.pem
+        - ./kda.key:/etc/keys/priv.key
+        - ./conf.d/nginx-kda.conf:/etc/nginx/conf.d/kda.conf
+        - ../ca/leaf/certs/kda.com.cert.full.pem:/etc/nginx/ssl/fullchain.pem
+        - ../ca/leaf/private/kda.com.key.pem:/etc/nginx/ssl/privkey.pem
+        - ../ca/leaf/ca/ca-bundle.pem:/etc/nginx/ssl/ca-bundle.pem
+        # - ../ca/leaf/ca/ca-bundle.pem:/etc/nginx/client_certs/ca.pem
+        - ../ca/root/certs/ca.cert.pem:/etc/nginx/client_certs/ca.pem

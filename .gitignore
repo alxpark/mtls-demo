@@ -1,0 +1,5 @@
+.DS_Store
+*.pem
+index.txt*
+serial*
+bak/
