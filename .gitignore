@@ -3,4 +3,5 @@
 *.pfx
 index.txt*
 serial*
+passwd.srpv.*
 bak/

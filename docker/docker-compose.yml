@@ -9,20 +9,46 @@ services:
         - ./home:/usr/home
 
         # kda.com
-        - ./kda.key:/etc/keys/priv.key
-        - ./conf.d/nginx-kda.conf:/etc/nginx/conf.d/kda.conf
-        - ../ca/leaf/certs/kda.com.cert.full.pem:/etc/nginx/ssl/public.pem
-        - ../ca/leaf/certs/kda.com.cert.inter.pem:/etc/nginx/ssl/public.pem
+        - ./kda.key:/etc/nginx/ssl/priv.key
+        - ./nginx/conf.d/nginx-kda.conf:/etc/nginx/conf.d/kda.conf
         # - ../ca/leaf/certs/kda.com.cert.pem:/etc/nginx/ssl/public.pem
+        # - ../ca/leaf/certs/kda.com.cert.inter.pem:/etc/nginx/ssl/public.pem
+        - ../ca/leaf/certs/kda.com.cert.full.pem:/etc/nginx/ssl/public.pem
         - ../ca/leaf/private/kda.com.key.pem:/etc/nginx/ssl/privkey.pem
 
         # mTLS
-        # - ../ca/leaf/ca/ca-bundle.pem:/etc/nginx/ssl/ca-bundle.pem
-        # - ../ca/root/certs/ca.cert.pem:/etc/nginx/ssl/ca.pem
-        # - ../ca/leaf/ca/ca-bundle.pem:/etc/nginx/ssl/ca.pem
+        # - ./nginx/conf.d/nginx-kda-mtls.conf:/etc/nginx/conf.d/kda.conf
+        # - ../ca/leaf/ca/ca-bundle.pem:/etc/nginx/ssl/cacert.pem
+        - ../ca/root/certs/ca.cert.pem:/etc/nginx/ssl/cacert.pem
 
         # example.com
-        # - ./example.key:/etc/keys/priv.key
-        # - ./conf.d/nginx-example.conf:/etc/nginx/conf.d/example.conf
-        # - ../ca/leaf/certs/example.com.cert.full.pem:/etc/nginx/ssl/public.pem
+        # - ./example.key:/etc/nginx/ssl/priv.key
+        # - ./nginx/conf.d/nginx-example.conf:/etc/nginx/conf.d/example.conf
         # - ../ca/leaf/private/example.com.key.pem:/etc/nginx/ssl/privkey.pem
+        # - ../ca/leaf/certs/example.com.cert.full.pem:/etc/nginx/ssl/public.pem
+
+
+  apache:
+    container_name: kda_apache
+    image: httpd:2.4
+    ports:
+        - "8080:80"
+        - "8443:443"
+    volumes:
+        - ./home/kda:/usr/local/apache2/htdocs/
+        - ./apache/httpd-kda.conf:/usr/local/apache2/conf/httpd.conf
+
+        # kda.com
+        # - ../ca/leaf/certs/kda.com.cert.pem:/usr/local/apache2/ssl/public.pem
+        # - ../ca/leaf/certs/kda.com.cert.inter.pem:/usr/local/apache2/ssl/public.pem
+        - ../ca/leaf/certs/kda.com.cert.full.pem:/usr/local/apache2/ssl/public.pem
+        - ../ca/leaf/private/kda.com.key.nopwd.pem:/usr/local/apache2/ssl/privkey.pem
+        - ../ca/leaf/ca/ca-bundle.pem:/usr/local/apache2/ssl/server-ca.pem
+        # - ../ca/intermediate/certs/intermediate.cert.pem:/usr/local/apache2/ssl/client-ca.pem
+        # - ../ca/root/certs/ca.cert.pem:/usr/local/apache2/ssl/client-ca.pem
+
+
+        # mTLS
+        - ./apache/httpd-kda-mtls.conf:/usr/local/apache2/conf/extra/httpd-kda-mtls.conf
+        - ../ca/leaf/ca/ca-bundle.pem:/usr/local/apache2/ssl/client-ca.pem
+        - ./apache/passwd.srpv:/usr/local/apache2/conf/passwd.srpv
