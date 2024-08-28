@@ -1,6 +1,6 @@
 # mtls-demo
 
-mTLS demo using NGINX & Docker
+mTLS demo using NGINX / Apache2 & Docker
 
 ## /ca
 
@@ -8,7 +8,7 @@ Certificate Authority Example
 
 ## /docker
 
-NGINX mTLS demo using Docker
+NGINX / Apache2 mTLS demo using Docker
 
 ## /openssl
 

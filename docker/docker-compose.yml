@@ -10,16 +10,16 @@ services:
 
         # kda.com
         - ./kda.key:/etc/nginx/ssl/priv.key
-        - ./nginx/conf.d/nginx-kda.conf:/etc/nginx/conf.d/kda.conf
+        # - ./nginx/conf.d/nginx-kda.conf:/etc/nginx/conf.d/kda.conf
         # - ../ca/leaf/certs/kda.com.cert.pem:/etc/nginx/ssl/public.pem
         # - ../ca/leaf/certs/kda.com.cert.inter.pem:/etc/nginx/ssl/public.pem
         - ../ca/leaf/certs/kda.com.cert.full.pem:/etc/nginx/ssl/public.pem
         - ../ca/leaf/private/kda.com.key.pem:/etc/nginx/ssl/privkey.pem
 
         # mTLS
-        # - ./nginx/conf.d/nginx-kda-mtls.conf:/etc/nginx/conf.d/kda.conf
-        # - ../ca/leaf/ca/ca-bundle.pem:/etc/nginx/ssl/cacert.pem
-        - ../ca/root/certs/ca.cert.pem:/etc/nginx/ssl/cacert.pem
+        - ./nginx/conf.d/nginx-kda-mtls.conf:/etc/nginx/conf.d/kda.conf
+        - ../ca/leaf/ca/ca-bundle.pem:/etc/nginx/ssl/cacert.pem
+        # - ../ca/root/certs/ca.cert.pem:/etc/nginx/ssl/cacert.pem
 
         # example.com
         # - ./example.key:/etc/nginx/ssl/priv.key
